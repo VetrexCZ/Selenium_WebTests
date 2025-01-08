@@ -1,1 +1,0 @@
-C:\Users\Daniel Skøivánek\.wdm\drivers\chromedriver\win64\131.0.6778.264\chromedriver-win32/chromedriver.exe
