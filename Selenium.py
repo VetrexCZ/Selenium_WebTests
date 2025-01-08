@@ -6,6 +6,7 @@ from selenium.webdriver.common.keys import Keys # Simulation of keyboard keys
 from selenium.webdriver.common.by import By # Locators for elements
 from selenium import webdriver  # Main Selenium WebDriver
 import logging # Logging messages
+import os # Operating system functions
 
 # Logging configuration
 logging.basicConfig(
@@ -30,7 +31,6 @@ def handle_cookies(driver):
 def initialize_driver():
     """Initializing Chrome WebDriver with robust configuration"""
     try:
-        import os
 
         driver_cache_path = "chromedriver_path.txt"
         if os.path.exists(driver_cache_path):
@@ -86,7 +86,7 @@ def verify_search_functionality(driver, search_query, expected_result):
         logger.error(f"Error testing search: {e}")
         raise
 
-# Configuration
+
 # URL of the website to be tested
 URL = "https://www.autodily-pema.cz"
 
