@@ -16,18 +16,6 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-def handle_cookies(driver):
-    """Handle cookie consent popup"""
-    try:
-        # Wait for the cookies consent button to be clickable
-        cookies_button = WebDriverWait(driver, 5).until(
-            ec.element_to_be_clickable((By.XPATH, "//*[@id='cookieConsent__buttonGrantAll']"))
-        )
-        cookies_button.click()
-        logger.info("Cookies consent button clicked successfully")
-    except Exception as e:
-        logger.warning(f"Error handling cookies popup: {e}")
-
 def initialize_driver():
     """Initializing Chrome WebDriver with robust configuration"""
     try:
@@ -49,6 +37,18 @@ def initialize_driver():
     except Exception as e:
         logger.error(f"Error initializing WebDriver: {e}")
         raise
+        
+def handle_cookies(driver):
+    """Handle cookie consent popup"""
+    try:
+        # Wait for the cookies consent button to be clickable
+        cookies_button = WebDriverWait(driver, 5).until(
+            ec.element_to_be_clickable((By.XPATH, "//*[@id='cookieConsent__buttonGrantAll']"))
+        )
+        cookies_button.click()
+        logger.info("Cookies consent button clicked successfully")
+    except Exception as e:
+        logger.warning(f"Error handling cookies popup: {e}")
 
 def verify_page_title(driver, expected_title):
     """Verify the page title matches the expected title"""
