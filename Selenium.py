@@ -8,6 +8,9 @@ from selenium import webdriver  # Main Selenium WebDriver
 import logging # Logging messages
 import os # Operating system functions
 
+# URL of the website to be tested
+URL = "https://www.autodily-pema.cz"
+
 # Logging configuration
 logging.basicConfig(
     level=logging.INFO, # DEBUG, INFO, WARNING, ERROR, CRITICAL
@@ -86,10 +89,6 @@ def verify_search_functionality(driver, search_query, expected_result):
         logger.error(f"Error testing search: {e}")
         raise
 
-
-# URL of the website to be tested
-URL = "https://www.autodily-pema.cz"
-
 def open_webpage(driver, url):
     """Open the webpage"""
     driver.get(url)
@@ -105,7 +104,7 @@ def run_tests():
 
         # Tests
         handle_cookies(driver)
-        verify_page_title(driver, "Autodíly, náhradní díly, motorové oleje, autobaterie, výfuky, levně")
+        verify_page_title(driver, "Autodíly, motodíly, cyklo vybavení, nářadí, oleje, chovatelské potřeby, zahrada - levně")
         verify_search_functionality(driver, "Brzdové destičky", "Brzdové destičky")
 
         logger.info("All tests were successful")
