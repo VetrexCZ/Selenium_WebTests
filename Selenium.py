@@ -19,6 +19,11 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
+def open_webpage(driver, url):
+    """Open the webpage"""
+    driver.get(url)
+    logger.info(f"Opened webpage: {url}")
+
 def initialize_driver():
     """Initializing Chrome WebDriver with robust configuration"""
     try:
@@ -40,13 +45,13 @@ def initialize_driver():
     except Exception as e:
         logger.error(f"Error initializing WebDriver: {e}")
         raise
-        
+
 def handle_cookies(driver):
     """Handle cookie consent popup"""
     try:
         # Wait for the cookies consent button to be clickable
         cookies_button = WebDriverWait(driver, 5).until(
-            ec.element_to_be_clickable((By.XPATH, "//*[@id='cookieConsent__buttonGrantAll']"))
+            ec.element_to_be_clickable((By.NAME, "grantAllButton"))
         )
         cookies_button.click()
         logger.info("Cookies consent button clicked successfully")
@@ -89,10 +94,24 @@ def verify_search_functionality(driver, search_query, expected_result):
         logger.error(f"Error testing search: {e}")
         raise
 
-def open_webpage(driver, url):
-    """Open the webpage"""
-    driver.get(url)
-    logger.info(f"Opened webpage: {url}")
+def verify_login_form(driver):
+    """Verify login form functionality"""
+    try:
+        # Click "Můj účet" button
+        account_button = WebDriverWait(driver, 5).until(
+            ec.element_to_be_clickable((By.CLASS_NAME,"layoutHeaderMainBar__button__label"))
+        )
+        account_button.click()
+
+        login_button = WebDriverWait(driver, 5).until(
+            ec.element_to_be_clickable((By.XPATH, "//a[@href='/prihlaseni']"))
+        )
+
+        login_button.click()
+        logger.info("Login form verification successful")
+    except Exception as e:
+        logger.error(f"Error verifying login form: {e}")
+        raise
 
 def run_tests():
     """Main Test execution Function"""
@@ -106,7 +125,7 @@ def run_tests():
         handle_cookies(driver)
         verify_page_title(driver, "Autodíly, motodíly, cyklo vybavení, nářadí, oleje, chovatelské potřeby, zahrada - levně")
         verify_search_functionality(driver, "Brzdové destičky", "Brzdové destičky")
-
+        verify_login_form(driver)
         logger.info("All tests were successful")
 
     except Exception as e:
