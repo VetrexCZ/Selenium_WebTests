@@ -108,7 +108,11 @@ def verify_login_form(driver):
         )
 
         login_button.click()
+        
+        driver.find_element(By.ID, "frm-login-loginForm-email").send_keys("test")
 
+        driver.find_element(By.ID, "frm-login-loginForm-password").send_keys("test")
+        
         green_button = WebDriverWait(driver, 5).until(
             ec.element_to_be_clickable((By.CSS_SELECTOR, "input[type='submit'][value='Přihlásit se']"))
         )
