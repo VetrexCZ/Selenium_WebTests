@@ -99,19 +99,27 @@ def verify_login_form(driver):
     try:
         # Click "Můj účet" button
         account_button = WebDriverWait(driver, 5).until(
-            ec.element_to_be_clickable((By.CLASS_NAME,"layoutHeaderMainBar__button__label"))
+            ec.element_to_be_clickable((By.XPATH,"//span[@class='layoutHeaderMainBar__button__label'][contains(text(),'Můj účet')]"))
         )
         account_button.click()
 
         login_button = WebDriverWait(driver, 5).until(
-            ec.element_to_be_clickable((By.XPATH, "//a[@href='/prihlaseni']"))
+            ec.element_to_be_clickable((By.XPATH, "//span[@class='dropdownMenu__icon']"))
         )
 
         login_button.click()
+
+        green_button = WebDriverWait(driver, 5).until(
+            ec.element_to_be_clickable((By.CSS_SELECTOR, "input[type='submit'][value='Přihlásit se']"))
+        )
+
+        green_button.click()
+
         logger.info("Login form verification successful")
     except Exception as e:
-        logger.error(f"Error verifying login form: {e}")
-        raise
+        error_message = f"Error verifying login form: {str(e.__class__.__name__)}: {str(e)}"
+        logger.error(error_message)
+        raise type(e)(error_message) from e
 
 def run_tests():
     """Main Test execution Function"""
