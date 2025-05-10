@@ -56,7 +56,9 @@ def handle_cookies(driver):
         cookies_button.click()
         logger.info("Cookies consent button clicked successfully")
     except Exception as e:
-        logger.warning(f"Error handling cookies popup: {e}")
+        error_message = f"Error handling cookies: {str(e.__class__.__name__)}: {str(e)}"
+        logger.warning(error_message)
+        raise type(e) (error_message) from e
 
 def verify_page_title(driver, expected_title):
     """Verify the page title matches the expected title"""
@@ -65,8 +67,9 @@ def verify_page_title(driver, expected_title):
         assert expected_title in actual_title, f"Page title verification failed: Expected title to contain '{expected_title}', but found '{actual_title}'"
         logger.info(f"Page title verified: {actual_title}")
     except AssertionError as e:
-        logger.error(f"Page title not found: {e}")
-        raise
+        error_message = f"Error verifying page title: {str(e.__class__.__name__)}: {str(e)}"
+        logger.error(error_message)
+        raise type(e)(error_message) from e
 
 def verify_search_functionality(driver, search_query, expected_result):
     """Test the search functionality on the website"""
@@ -91,8 +94,9 @@ def verify_search_functionality(driver, search_query, expected_result):
         logger.info("Search functionality works correctly")
     
     except Exception as e:
-        logger.error(f"Error testing search: {e}")
-        raise
+        error_message = f"Error testing search functionality {str(e.__class__.__name__)}: {str(e)}"
+        logger.error(error_message)
+        raise type(e)(error_message) from e
 
 def verify_login_form(driver):
     """Verify login form functionality"""
@@ -141,7 +145,7 @@ def run_tests():
         logger.info("All tests were successful")
 
     except Exception as e:
-        logger.error(f"Error: program cannot be complete: {e}")
+        logger.error(f"Error: Test execution failed: {e}")
 
     finally:
         # Page close
