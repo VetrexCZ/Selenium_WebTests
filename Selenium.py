@@ -160,8 +160,8 @@ def verify_login_form(driver):
 
         # Validation message from empty password field
         validation_message = driver.execute_script("return arguments[0].validationMessage;", password_input)
-        assert "Vyplňte prosím toto pole" in validation_message, (
-            "Error message from empty password field is not displayed")
+        assert "Vyplňte prosím toto pole" in validation_message, \
+            "Error message from empty password field is not displayed"
         logger.info(f"Validation message from empty password: {validation_message}")
 
         password_input.send_keys("test")
