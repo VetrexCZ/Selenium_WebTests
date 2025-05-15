@@ -192,7 +192,8 @@ def run_tests():
 
         # Tests
         handle_cookies(driver)
-        verify_page_title(driver, "Autodíly, motodíly, cyklo vybavení, nářadí, oleje, chovatelské potřeby, zahrada - levně")
+        verify_page_title(driver, 
+            "Autodíly, motodíly, cyklo vybavení, nářadí, oleje, chovatelské potřeby, zahrada - levně")
         verify_search_functionality(driver, "Brzdové destičky", "Brzdové destičky")
         verify_login_form(driver)
         logger.info("All tests were successful")
