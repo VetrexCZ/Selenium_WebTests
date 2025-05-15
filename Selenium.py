@@ -65,8 +65,8 @@ def verify_page_title(driver, expected_title):
     """Verify the page title matches the expected title"""
     try:
         actual_title = driver.title
-        assert expected_title in actual_title, (
-            f"Page title verification failed: expected'{expected_title}', but found '{actual_title}'")
+        assert expected_title in actual_title, \
+            f"Page title verification failed: expected'{expected_title}', but found '{actual_title}'"
         logger.info(f"Page title verified: {actual_title}")
     except AssertionError as e:
         error_message = f"Verifying page title: {str(e.__class__.__name__)}: {str(e)}"
@@ -93,8 +93,8 @@ def verify_search_functionality(driver, search_query, expected_result):
 
         # Verify element is displayed
         assert product_heading.is_displayed(), "Search results not displayed"
-        assert expected_result in product_heading.text, (
-            f"Search query '{search_query}' failed: Expected '{expected_result}' not found in '{product_heading.text}'")
+        assert expected_result in product_heading.text, \
+            f"Search query '{search_query}' failed: Expected '{expected_result}' not found in '{product_heading.text}'"
         logger.info("Search functionality works correctly")
     
     except Exception as e:
@@ -107,7 +107,8 @@ def verify_login_form(driver):
     try:
         # Click "Můj účet" button
         account_button = WebDriverWait(driver, 5).until(
-            ec.element_to_be_clickable((By.XPATH,"//span[@class='layoutHeaderMainBar__button__label'][contains(text(),'Můj účet')]"))
+            ec.element_to_be_clickable((
+                By.XPATH,"//span[@class='layoutHeaderMainBar__button__label'][contains(text(),'Můj účet')]"))
         )
         account_button.click()
 
@@ -143,7 +144,8 @@ def verify_login_form(driver):
 
         # Validation message from invalid email
         validation_message = driver.execute_script("return arguments[0].validationMessage;", email_input)
-        assert "Do e-mailové adresy zahrňte znak @. V adrese test chybí znak @." in validation_message, "Error message from invalid email is not displayed"
+        assert "Do e-mailové adresy zahrňte znak @. V adrese test chybí znak @." \
+                in validation_message, "Error message from invalid email is not displayed"
         logger.info(f"Validation message from invalid email: {validation_message}")
 
         email_input.clear()
